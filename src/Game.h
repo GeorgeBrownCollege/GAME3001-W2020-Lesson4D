@@ -14,12 +14,9 @@
 #include "CollisionManager.h"
 
 // Game Objects
-#include "Player.h"
-#include "Island.h"
-#include "Ocean.h"
-#include "Cloud.h"
 #include "ship.h"
 #include "Target.h"
+#include "Obstacle.h"
 
 class Game
 {
@@ -28,7 +25,7 @@ public:
 
 	static Game* Instance()
 	{
-		if (s_pInstance == 0)
+		if (s_pInstance == nullptr)
 		{
 			s_pInstance = new Game();
 			return s_pInstance;
@@ -72,15 +69,9 @@ private:
 	static Game* s_pInstance;
 
 	// GameObjects
-	Player* m_pPlayer;
-	Island* m_pIsland;
-	Ocean* m_pOcean;
 	ship* m_pShip;
 	Target* m_pTarget;
-
-	// cloud game objects
-	int m_cloudNum = 3;
-	std::vector<Cloud*> m_pClouds;
+	Obstacle* m_pObstacle;
 
 	void createGameObjects();
 

@@ -30,8 +30,8 @@ void Game::createGameObjects()
 {
 
 	m_pShip = new ship();
-
 	m_pTarget = new Target();
+	m_pObstacle = new Obstacle();
 }
 
 bool Game::init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen)
@@ -95,6 +95,7 @@ void Game::render()
 
 	m_pTarget->draw();
 	m_pShip->draw();
+	m_pObstacle->draw();
 
 	//Util::DrawRect(m_pShip->getPosition() - glm::vec2(m_pShip->getWidth() * 0.5, m_pShip->getHeight() * 0.5), m_pShip->getWidth(), m_pShip->getHeight());
 
@@ -105,8 +106,8 @@ void Game::update()
 {
 	
 	m_pShip->update();
-
 	m_pTarget->update();
+	m_pObstacle->update();
 
 }
 
