@@ -55,6 +55,7 @@ private:
 	glm::vec2 m_targetPosition;
 	glm::vec2 m_targetDirection;
 	void m_computeTargetDirection();
+	float m_angleToTarget;
 };
 
 

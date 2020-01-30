@@ -19,10 +19,10 @@ ship::ship()
 	setType(GameObjectType::SHIP);
 	setSteeringState(SteeringState::IDLE);
 	m_maxSpeed = 5.0f;
-	m_currentHeading = 0.0; // current facing angle
+	m_currentHeading = 0.0f; // current facing angle
 	m_turnRate = 5.0f; // 5 degrees per frame
 	m_currentDirection = glm::vec2(1.0f, 0.0f); // facing right
-
+	m_angleToTarget = 0.0f;
 }
 
 
@@ -72,7 +72,10 @@ void ship::clean()
 
 void ship::turnRight()
 {
-	m_currentHeading += m_turnRate;
+	float angleDiff = abs(abs(m_angleToTarget) - m_turnRate);
+	//std::cout << "angleDiff: " << angleDiff << std::endl;
+	
+	m_currentHeading += (angleDiff < m_turnRate) ? angleDiff : m_turnRate;
 
 	if (m_currentHeading > 360)
 	{
@@ -86,7 +89,10 @@ void ship::turnRight()
 
 void ship::turnLeft()
 {
-	m_currentHeading -= m_turnRate;
+	float angleDiff = abs(abs(m_angleToTarget) - m_turnRate);
+	//std::cout << "angleDiff: " << angleDiff << std::endl;
+	
+	m_currentHeading -= (angleDiff < m_turnRate) ? angleDiff : m_turnRate;
 
 	if (m_currentHeading < 0)
 	{
@@ -100,17 +106,17 @@ void ship::turnLeft()
 
 void ship::move()
 {
-	float angleToTarget = Util::signedAngle(getCurrentDirection(), m_targetDirection);
-	//std::cout << "target Direction: " << angleToTarget << std::endl;
+	m_angleToTarget = Util::signedAngle(getCurrentDirection(), m_targetDirection);
+	//std::cout << "target Direction: " << m_angleToTarget << std::endl;
 
-	//TODO: if angleToTarget > 0.0f then turn right
-	if(angleToTarget > 0.0f)
+	//TODO: if m_angleToTarget > 0.0f then turn right
+	if(m_angleToTarget > 0.0f)
 	{
 		turnRight();
 	}
 
-	//TODO: if angleToTarget < 0.0f then turn left
-	if (angleToTarget < 0.0f)
+	//TODO: if m_angleToTarget < 0.0f then turn left
+	if (m_angleToTarget < 0.0f)
 	{
 		turnLeft();
 	}

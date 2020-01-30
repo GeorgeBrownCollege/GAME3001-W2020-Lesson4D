@@ -10,6 +10,7 @@ enum GameObjectType {
 	OCEAN,
 	SHIP,
 	TARGET,
+	OBSTACLE,
 	NUM_OF_TYPES
 };
 
