@@ -13,6 +13,9 @@ Target::Target()
 	setVelocity(glm::vec2(0, 0));
 	setIsColliding(false);
 	setType(GameObjectType::TARGET);
+
+	TheSoundManager::Instance()->load("../Assets/audio/yay.ogg",
+		"yay", sound_type::SOUND_SFX);
 }
 
 Target::~Target()

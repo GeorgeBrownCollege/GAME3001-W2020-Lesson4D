@@ -77,6 +77,8 @@ private:
 
 	glm::vec2 m_mousePosition;
 
+	bool m_debug;
+
 };
 
 typedef Game TheGame;

@@ -55,6 +55,7 @@ void ship::m_checkSteeringState()
 	case SteeringState::ARRIVE:
 		break;
 	case SteeringState::AVOID:
+		turnLeft();
 		break;
 	case SteeringState::FLEE:
 		break;

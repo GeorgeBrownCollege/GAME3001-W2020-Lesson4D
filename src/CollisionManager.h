@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "GameObject.h"
+#include "ship.h"
 #include <GLM/gtx/norm.hpp>
 #include "SoundManager.h"
 
@@ -20,7 +21,7 @@ public:
 	static bool lineLineCheck(glm::vec2 line1Start, glm::vec2 line1End, glm::vec2 line2Start, glm::vec2 line2End);
 	static bool lineRectCheck(glm::vec2 line1Start, glm::vec2 line1End, glm::vec2 recStart, float recWidth, float recHeight);
 	static int minSquaredDistanceLineLine(glm::vec2 line1Start, glm::vec2 line1End, glm::vec2 line2Start, glm::vec2 line2End);
-
+	static bool lineAABBCheck(ship* object1, GameObject* object2);
 
 	static int circleAABBsquaredDistance(glm::vec2 circleCentre, int circleRadius, glm::vec2 boxStart, int boxWidth, int boxHeight);
 	static bool circleAABBCheck(GameObject* object1, GameObject* object2);

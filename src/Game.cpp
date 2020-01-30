@@ -18,7 +18,7 @@ glm::vec2 Game::getMousePosition()
 	return m_mousePosition;
 }
 
-Game::Game()
+Game::Game():m_debug(false)
 {
 }
 
@@ -97,8 +97,16 @@ void Game::render()
 	m_pShip->draw();
 	m_pObstacle->draw();
 
-	//Util::DrawRect(m_pShip->getPosition() - glm::vec2(m_pShip->getWidth() * 0.5, m_pShip->getHeight() * 0.5), m_pShip->getWidth(), m_pShip->getHeight());
+	if(m_debug)
+	{
+		Util::DrawRect(m_pObstacle->getPosition() - glm::vec2(m_pObstacle->getWidth() * 0.5, m_pObstacle->getHeight() * 0.5), m_pObstacle->getWidth(), m_pObstacle->getHeight());
+		Util::DrawCircle(m_pShip->getPosition(), m_pShip->getHeight() * 0.5);
+		Util::DrawCircle(m_pTarget->getPosition(), m_pTarget->getHeight() * 0.5);
 
+		Util::DrawLine(m_pShip->getPosition(), m_pShip->getPosition() + m_pShip->getCurrentDirection() * 100.0f);
+	}
+	
+	
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
 
@@ -108,6 +116,20 @@ void Game::update()
 	m_pShip->update();
 	m_pTarget->update();
 	m_pObstacle->update();
+
+	CollisionManager::circleAABBCheck(m_pShip, m_pObstacle);
+	CollisionManager::squaredRadiusCheck(m_pShip, m_pTarget);
+
+	if(CollisionManager::lineAABBCheck(m_pShip, m_pObstacle))
+	{
+		//std::cout << "line collision with Obstacle!" << std::endl;
+
+		m_pShip->setSteeringState(AVOID);
+	}
+	else
+	{
+		m_pShip->setSteeringState(IDLE);
+	}
 
 }
 
@@ -181,6 +203,9 @@ void Game::handleEvents()
 				case SDLK_UP:
 					m_pShip->setVelocity(m_pShip->getCurrentDirection());
 					m_pShip->move();
+					break;
+				case SDLK_BACKQUOTE:
+					m_debug = !m_debug;
 					break;
 
 			}

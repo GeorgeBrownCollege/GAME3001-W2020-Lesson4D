@@ -13,6 +13,9 @@ Obstacle::Obstacle()
 	setVelocity(glm::vec2(0, 0));
 	setIsColliding(false);
 	setType(GameObjectType::OBSTACLE);
+
+	TheSoundManager::Instance()->load("../Assets/audio/thunder.ogg",
+		"thunder", sound_type::SOUND_SFX);
 }
 
 Obstacle::~Obstacle()

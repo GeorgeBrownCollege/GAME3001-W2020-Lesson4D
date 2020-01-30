@@ -182,6 +182,37 @@ int CollisionManager::minSquaredDistanceLineLine(glm::vec2 line1Start, glm::vec2
 	return norm;
 }
 
+bool CollisionManager::lineAABBCheck(ship* object1, GameObject* object2)
+{
+	glm::vec2 lineStart = object1->getPosition();
+	glm::vec2 lineEnd = object1->getPosition() + object1->getCurrentDirection() * 100.0f;
+	// aabb
+	int boxWidth = object2->getWidth();
+	int halfBoxWidth = boxWidth * 0.5f;
+	int boxHeight = object2->getHeight();
+	int halfBoxHeight = boxHeight * 0.5f;
+	glm::vec2 boxStart = object2->getPosition() - glm::vec2(halfBoxWidth, halfBoxHeight);
+
+	if(lineRectCheck(lineStart, lineEnd, boxStart, boxWidth, boxHeight))
+	{
+		switch (object2->getType()) {
+		case OBSTACLE:
+			std::cout << "Collision with Obstacle!" << std::endl;
+			TheSoundManager::Instance()->playSound("thunder", 0);
+
+			
+			break;
+		default:
+			//std::cout << "Collision with unknown type!" << std::endl;
+			break;
+		}
+
+		return true;
+	}
+	
+	return false;
+}
+
 int CollisionManager::circleAABBsquaredDistance(glm::vec2 circleCentre, int circleRadius, glm::vec2 boxStart, int boxWidth, int boxHeight)
 {
 	float dx = std::max(boxStart.x - circleCentre.x, 0.0f);
